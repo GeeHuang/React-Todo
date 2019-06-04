@@ -30,11 +30,9 @@ export default class App extends React.Component {
 
     render() {
         const TodoItems = this.state.todos.map(item => <TodoItem key= {item.id} item= {item} handleChange= {this.handleChange} />);
-
         return (
             <div>
                <Nav /> 
-               
                 <div className="todo-list">
                     {TodoItems}
                 </div> 

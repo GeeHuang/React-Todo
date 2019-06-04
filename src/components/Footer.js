@@ -1,57 +1,147 @@
 import React from 'react';
-//import Nav from './Nav';
+import Nav from './Nav';
 
-  /*
-    Challenge:
 
-        Given a stateless functional component:
-        1. Follow the steps necessary to add state to it,
-            // class-based component
-            // constructor method
-        2. Have state keep track of whether the user is logged in or not
-            // isLoggedIn: Boolean (true or false)
-        3. Add a button that logs the user in/out
-            // event listener (onClick)
-            a. extra challenge - make the button display "log in" if they're not logged in and "log out" if they are
-                // Conditional Rendering
-        4. Display text that says "Logged in" if the user is logged in, or "Logged out" if they're not.
-            // Conditional Rendering
-    */
+    /**
+     * Challenge: Wire up the partially-finished travel form so that it works!
+     * Remember to use the concept of controlled forms
+     * https://reactjs.org/docs/forms.html
+     * 
+     * All information should be populating the text below the form in real-time
+     * as you're filling it out
+     * 
+     * This exercise is adapted from the V School curriculum on vanilla JS forms:
+     * https://coursework.vschool.io/travel-form/
+     * 
+     * All of our challenges and learning resources are open for the public
+     * to play around with and learn from at https://coursework.vschool.io
+     */
+
 
 export default class Footer extends React.Component {
     constructor() {
         super();
-        this.state = {isLoggedIn: false};
+        this.state = {
+            firstName: "",
+            lastName: "",
+            age: "",
+            isVegan: false,
+            isKosher: false,
+            isLactoseFree: false,
+            gender: "",
+            location: "nyc"
+        }
         this.handleChange = this.handleChange.bind(this);
     }
 
-    handleChange(){
-        this.setState(prevState => {
-            return {isLoggedIn : !prevState.isLoggedIn}
-        });
+    handleChange(event) {
+        const {name, value, type, checked} = event.target
+        type === "checkbox" ? 
+            this.setState({
+                [name]: checked
+            })
+        :
+        this.setState({
+            [name]: value
+        }) 
     }
 
-    // componentDidMount() {
-    //     setTimeout(() => {
-    //         this.setState({
-    //             isLoggedIn: false
-    //         });
-    //     }, (1500));
-    // }
+    componentDidMount() {
+        setTimeout(() => {
+            this.setState({
+                isLoggedIn: false
+            });
+        }, (1500));
+    }
 
     render(){
-        const style = { 
-            transform: "translateX(100px)",
-        }
-        let buttonText = this.state.isLoggedIn ? "in" : "out";
-        let text = this.state.isLoggedIn ? "logout" : "login";
         return(
-            // <div>
-            //     <Nav is isLoggedIn = {this.state.isLoggedIn} /> 
-            // </div>
             <div>
-                <p>{text}</p>
-                <button style={this.state.isLoggedIn ? style:null} type="submit" onClick = {this.handleChange}>G is Logged {buttonText}</button>
+                <Nav is isLoggedIn = {this.state.isLoggedIn} /> 
+                <br/>
+                
+                <main>
+                    <form >
+                        <input type="text" 
+                                value={this.state.firstName} 
+                                name="firstName" 
+                                placeholder="First Name" 
+                                onChange={this.handleChange}/>
+                        <br />
+                        <input type="text" 
+                                value={this.state.lastName} 
+                                name="lastName" 
+                                placeholder="Last Name" 
+                                onChange={this.handleChange}/>
+                        <br />
+                        <input type="text" 
+                                value={this.state.age} 
+                                name="age" 
+                                placeholder="Age" 
+                                onChange={this.handleChange}/>
+                        <br />
+                        
+                        {/* Create radio buttons for gender here */}
+                        <label><input type="radio" name="gender" value="male" checked={this.state.gender === "male"} onChange={this.handleChange}/>Male</label>
+                        <label><input type="radio" name="gender" value="female" checked={this.state.gender === "female"} onChange={this.handleChange}/>Female</label>
+                        <br />
+                        
+                        {/* Create select box for location here */}
+                        <label>Select your location:</label>
+                        <select value= {this.state.location} onChange={this.handleChange} name="location">
+                        <option value="nyc">NYC</option>
+                        <option value="toronto">Toronto</option>
+                        <option value="texas">Texas</option>
+                        </select>
+                        <br />
+                        
+                        {/* Create check boxes for dietary restrictions here */}
+                        <label>
+                        <input 
+                            type="checkbox"
+                            name="isVegan"
+                            onChange={this.handleChange}
+                            checked={this.state.isVegan}
+                        /> Vegan?
+                    </label>
+                    <br />
+                    
+                    <label>
+                        <input 
+                            type="checkbox"
+                            name="isKosher"
+                            onChange={this.handleChange}
+                            checked={this.state.isKosher}
+                        /> Kosher?
+                    </label>
+                    <br />
+                    
+                    <label>
+                        <input 
+                            type="checkbox"
+                            name="isLactoseFree"
+                            onChange={this.handleChange}
+                            checked={this.state.isLactoseFree}
+                        /> Lactose Free?
+                    </label>
+                    <br />
+                        
+                        <button>Submit</button>
+                    </form>
+                    <hr />
+                    <h2>Entered information:</h2>
+                    <p>Your name: {this.state.firstName} {this.state.lastName}</p>
+                    <p>Your age: {this.state.age}</p>
+                    <p>Your gender: {this.state.gender}</p>
+                    <p>Your destination: {this.state.location}</p>
+                    <p>
+                        Your dietary restrictions: 
+                    </p>
+                    <p>Vegan: {this.state.isVegan ? "Yes" : "No"}</p>
+                    <p>Kosher: {this.state.isKosher ? "Yes" : "No"}</p>
+                    <p>Lactose Free: {this.state.isLactoseFree ? "Yes" : "No"}</p>
+                </main>
+        
             </div>
             
             )
