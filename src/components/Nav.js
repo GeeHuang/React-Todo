@@ -1,21 +1,22 @@
 import React from 'react';
 
-export default class Nav extends React.Component {
+function Nav(props) {
 
-    constructor() {
-        super();
-        this.state = {
-            name: 'G',
-            age: 26
-        }
-    }
+    return(
+        <div>
+            {props.isLoggedIn ? <h1>G ISSA in</h1> : <h1>G ISSA out</h1>}
+        </div>
+    ) 
 
-    render() {
-        return(
-            <div>
-                <h1>{this.state.name}</h1>
-                <h1>{this.state.age} years old</h1>
-            </div> 
-            )
-    }
-};
+    // if(props.isLoggedIn === true) {
+    //     return (
+    //         <h1>G ISSA in</h1>
+    //     )
+    // }else{
+    //     return (
+    //         <h1>G ISSA out</h1>
+    //     )
+    // }
+}
+
+export default Nav;
